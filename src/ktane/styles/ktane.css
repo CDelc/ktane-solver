@@ -1,0 +1,120 @@
+.module-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 50px;
+}
+
+.module-button {
+    height: 200px;
+    width: 60%;
+    margin: 20px;
+    border-radius: 30px;
+    border: 1px solid;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    font-family: "Anonymous Pro", monospace;
+    font-weight: 800;
+    font-size: 50px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.module-button:hover {
+    background-color: rgb(81, 81, 81);
+    transform: translateX(10px);
+    color: white;
+    border: black;
+}
+
+.module-button-title {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
+
+.button-image {
+    height: 100%;
+    width: 200px;
+}
+
+.module-search-bar {
+    margin: 20px;
+    width: 60%;
+    height: 50px;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.207);
+    border-radius: 25px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 200;
+    font-size: 50px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.module-container {
+    margin-inline: 50px;
+}
+
+.module-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 100px;
+}
+
+.module-header h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 250;
+    font-size: 70px;
+    font-style: italic;
+}
+
+.module-header button {
+    background-color: transparent;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    border: solid red 2px;
+    padding-inline: 10px;
+    height: 40px;
+    border-radius: 20px;
+    transition: background-color 0.2s
+}
+
+.module-header button:hover {
+    background-color: rgba(200, 0, 0, 0.2)
+}
+
+.module-error {
+    padding: 10px;
+    height: 50px;
+    background-color:rgba(255, 100, 100, 0.4);
+    margin-top: 20px;
+    font-family: "Roboto";
+    font-style: italic;
+    color: rgb(120, 69, 69);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.module-solve {
+    padding: 10px;
+    height: 50px;
+    background-color:rgba(100, 255, 100, 0.4);
+    margin-top: 20px;
+    font-family: "Roboto";
+    font-style: italic;
+    font-size: 20px;
+    color: rgb(69, 120, 69);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

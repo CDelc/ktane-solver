@@ -1,0 +1,52 @@
+import A from './A.png'
+import ae from './ae.png'
+import backC from './backC.png'
+import balloon from './balloon.png'
+import blackstar from './blackstar.png'
+import bolt from './bolt.png'
+import C from './C.png'
+import copy from './copy.png'
+import doubledot from './doubledot.png'
+import H from './H.png'
+import hash from './hash.png'
+import lambda from './lambda.png'
+import loop from './loop.png'
+import N from './N.png'
+import omega from './omega.png'
+import paragraph from './paragraph.png'
+import psi from './psi.png'
+import question from './question.png'
+import R from './R.png'
+import six from './six.png'
+import tb from './tb.png'
+import three from './three.png'
+import triangle from './triangle.png'
+import W from './W.png'
+import X from './X.png'
+
+export const symbols = [{name: 'A', img: A},
+    {name: 'ae', img: ae},
+    {name: 'backC', img: backC},
+    {name: 'balloon', img: balloon},
+    {name: 'blackstar', img: blackstar},
+    {name: 'bolt', img: bolt},
+    {name: 'C', img: C},
+    {name: 'copy', img: copy},
+    {name: 'doubledot', img: doubledot},
+    {name: 'H', img: H},
+    {name: 'hash', img: hash},
+    {name: 'lambda', img: lambda},
+    {name: 'loop', img: loop},
+    {name: 'N', img: N},
+    {name: 'omega', img: omega},
+    {name: 'paragraph', img: paragraph},
+    {name: 'psi', img: psi},
+    {name: 'question', img: question},
+    {name: 'R', img: R},
+    {name: 'six', img: six},
+    {name: 'tb', img: tb},
+    {name: 'three', img: three},
+    {name: 'triangle', img: triangle},
+    {name: 'W', img: W},
+    {name: 'X', img: X}
+]

@@ -1,0 +1,240 @@
+.edgework-container {
+    display: flex;
+    width: 100%;
+    background-color: rgb(99, 113, 125);
+    box-shadow: 0px 5px 5px black;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.serial-number-container {
+    margin: 15px;
+    height: 80px;
+    max-width: 150px;
+    border-radius: 15px;
+}
+
+.serial-header {
+    font-family: Arial serif;
+    display: flex;
+    align-items: center;
+    height: 50%;
+    background-color: rgb(150, 0, 0);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.serial-header-text {
+    width: 100%;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-weight: 350;
+    letter-spacing: 1px;
+    font-size: 18px;
+    color: white;
+}
+
+.serial-form {
+    height: 50%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.serial-input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.5em;
+    color: #000000;
+    text-align: center;
+    width: 100%;
+    font-family: "Anonymous Pro", monospace;
+    font-weight: 800;
+    font-size: 30px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.serial-input::placeholder {
+    color:rgba(149, 149, 149, 0.254);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    letter-spacing: 3px;
+}
+
+.edgework-option-container {
+    display: flex;
+    margin: 10px;
+    align-items: center;
+}
+
+.add-button {
+    width: 100px;
+    background-color: rgba(90, 107, 189, 0.254);
+    border: solid rgb(79, 97, 144) 1px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.add-button:hover {
+    background-color: rgba(32, 53, 153, 0.471);
+    color: white;
+    box-shadow: 2px 2px 2px black;
+}
+
+.battery-holder {
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 70px;
+    min-width: 100px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.remove-battery-button {
+    background-color: #ff4b4b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.remove-battery-button:hover {
+    background-color: #bf2828;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.remove-battery-button:active {
+    box-shadow: none;
+}
+
+.battery-button {
+    width: 100%;
+    height: 50px;
+    background: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    background-color: rgb(146, 146, 146);
+    border: solid 1px;
+    border-color: rgba(255, 255, 255, 0);
+    box-shadow: 2px 2px 2px black;
+    transition: border 0.3s ease;
+}
+
+.battery-button:hover {
+    border-color: rgba(0, 0, 0, 0.726);
+}
+
+.battery-button:active {
+    box-shadow: none;
+}
+
+.indicator {
+    display: flex;
+    align-items: center;
+    background-color: rgb(121, 12, 12);
+    height: 150px;
+    justify-content: space-around;
+}
+
+.indicator-light {
+    height: 25px;
+    width: 25px;
+    border-radius: 15px;
+    border: none;
+    margin: 5px;
+    margin-left: 10px;
+}
+
+.indicator-light-on {
+    background: radial-gradient(#efe1a5, #ffffff);
+}
+
+.indicator-light-off {
+    background: radial-gradient(#000000, #1f1f1f);
+}
+
+.indicator-label {
+    border: none;
+    background-color: black;
+    height: 40px;
+    width: 100px;
+    margin: 10px;
+    color: white;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    font-size: 28px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.port-plate {
+    background-color: rgb(94, 94, 94);
+    height: 100%;
+    min-width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.add-port {
+    background-color: #28a745;
+    border: none;
+    border-radius: 25%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s;
+}
+
+.add-port:hover {
+    background-color: #218838;
+}
+
+.port {
+    display: flex;
+    margin: 5px;
+}
+
+.remove-port {
+    background-color: #d33434;
+    border: none;
+    border-radius: 25%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s;
+}
+
+.remove-port:hover {
+    background-color: #882121;
+}
+
+.port-select {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
