@@ -52,10 +52,98 @@
     transition: all 0.3s ease;
 }
 
+.advance-button {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    width: 100px;
+    margin: 10px;
+    height: 50px;
+    background-color: rgba(0, 255, 17, 0.1);
+    border: 1px green solid;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.advance-button:hover {
+    background-color: rgba(0, 255, 4, 0.3);
+}
+
 .reset-button:hover {
     background-color: rgba(255, 0, 0, 0.3);
 }
 
 .symbol-button:hover {
     background-color: rgba(255, 0, 0, 0.2)
+}
+
+.ss-blue {
+    background-color: rgb(0,0,175)
+}
+
+.ss-red {
+    background-color: rgb(175,0,0)
+}
+
+.ss-green {
+    background-color: rgb(0,175,0)
+}
+
+.ss-yellow {
+    background-color: rgb(175,175,0)
+}
+
+.ss-blue:hover {
+    background-color: rgb(0,0,200)
+}
+
+.ss-red:hover {
+    background-color: rgb(200,0,0)
+}
+
+.ss-green:hover {
+    background-color: rgb(0,200,0)
+}
+
+.ss-yellow:hover {
+    background-color: rgb(200,200,0)
+}
+
+.morse-button {
+    width: 100px;
+    height: 100px;
+    font-size: 75px;
+    border-radius: 25px;
+    border: 1px solid black;
+    margin: 10px;
+    box-shadow: 2px 1px 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.morse-button:hover {
+    background-color: #8f8f8f;
+    box-shadow: none;
+}
+
+.morse-send {
+    width: 200px;
+    height: 100px;
+    font-size: 50px;
+    background-color: rgb(0, 171, 0);
+    border-radius: 25px;
+    border: 1px solid black;
+    margin: 10px;
+    box-shadow: 2px 1px 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.morse-send:hover {
+    background-color: #35d201;
+    box-shadow: none;
 }

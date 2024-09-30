@@ -18,6 +18,8 @@ import psi from './psi.png'
 import question from './question.png'
 import R from './R.png'
 import six from './six.png'
+import smile from './smile.png'
+import star from './star.png'
 import tb from './tb.png'
 import three from './three.png'
 import triangle from './triangle.png'
@@ -44,6 +46,8 @@ export const symbols = [{name: 'A', img: A},
     {name: 'question', img: question},
     {name: 'R', img: R},
     {name: 'six', img: six},
+    {name: 'smile', img: smile},
+    {name: 'star', img: star},
     {name: 'tb', img: tb},
     {name: 'three', img: three},
     {name: 'triangle', img: triangle},

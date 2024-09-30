@@ -14,6 +14,14 @@ import BombModule from './modules/BombModule';
 import Wires from './modules/Wires';
 import TheButton from './modules/TheButton';
 import Keypads from './modules/Keypads';
+import SimonSays from './modules/SimonSays';
+import Wof from './modules/Wof';
+import Memory from './modules/Memory';
+import MorseCode from './modules/MorseCode';
+import ComplicatedWires from './modules/ComplicatedWires';
+import WireSequences from './modules/WireSequences';
+import Mazes from './modules/Mazes';
+import Passwords from './modules/Passwords';
 
 const modules = [
     {
@@ -21,7 +29,8 @@ const modules = [
         image: wires,
         path: "wires",
         element: <BombModule />,
-        component: <Wires />
+        component: <Wires />,
+        description: 'Select the wire colors in the way they are arranged on the bomb'
     },
     {
         name: "The Button",
@@ -42,56 +51,56 @@ const modules = [
         image: simon_says,
         path: "simon_says",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <SimonSays />
     },
     {
         name: "Who's on First",
         image: whos_on_first,
         path: "wof",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <Wof />
     },
     {
         name: "Memory",
         image: memory,
         path: "memory",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <Memory />
     },
     {
         name: "Morse Code",
         image: morse_code,
         path: "morse_code",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <MorseCode />
     },
     {
         name: "Complicated Wires",
         image: complicated_wires,
         path: "complex_wires",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <ComplicatedWires />
     },
     {
         name: "Wire Sequences",
         image: wire_sequences,
         path: "wire_sequences",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <WireSequences />
     },
     {
         name: "Mazes",
         image: mazes,
         path: "mazes",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <Mazes />
     },
     {
         name: "Passwords",
         image: password,
         path: "passwords",
         element: <BombModule module={this} />,
-        component: <div />
+        component: <Passwords />
     }
 ]
 

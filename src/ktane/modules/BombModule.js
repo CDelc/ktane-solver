@@ -16,6 +16,7 @@ function BombModule(props) {
                     Return
                 </button>
             </div>
+            <div style={{width: '100%'}}></div>
             {props.module.component}
         </div>
     );

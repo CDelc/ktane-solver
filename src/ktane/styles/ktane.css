@@ -97,6 +97,8 @@
     margin-top: 20px;
     font-family: "Roboto";
     font-style: italic;
+    font-size: 20px;
+    font-weight: 400;
     color: rgb(120, 69, 69);
     border-radius: 20px;
     display: flex;
@@ -117,4 +119,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
