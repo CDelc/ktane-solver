@@ -1,9 +1,7 @@
-function Home() {
-    return (
-        <div>
+import { Navigate } from "react-router-dom";
 
-        </div>
-    )
+function Home() {
+    return <Navigate to='/ktane' />
 }
 
 export default Home;
