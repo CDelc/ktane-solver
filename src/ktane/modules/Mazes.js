@@ -161,6 +161,16 @@ function Mazes() {
         if(diff === -1) return '→'
     }
 
+    const getDirection = (index) => {
+        const routePosition = solution.indexOf(index)
+        if(routePosition === -1 || routePosition === solution.length - 1) return ''
+        const diff = solution[routePosition] - solution[routePosition + 1]
+        if(diff === 6) return 'Up'
+        if(diff === -6) return 'Down'
+        if(diff === 1) return 'Left'
+        if(diff === -1) return 'Right'
+    }
+
     const getMaze = () => {
         return validCircles.findIndex(e => (e.indexOf(circles[0]) > -1 && e.indexOf(circles[1]) > -1))
     }
@@ -240,7 +250,7 @@ function Mazes() {
                 </div>
             </div>
             {(error.length > 0) && <div className="module-error">{error}</div>}
-            {(error.length === 0 && solution.length > 0) && <div className="module-solve">{solution.map(i => getArrow(i)).join(' ')}</div>}
+            {(error.length === 0 && solution.length > 0) && <div className="module-solve">{solution.map(i => getDirection(i)).join(' ')}</div>}
             <button onClick={reset} className='reset-button'>Reset</button>
         </div>
     );

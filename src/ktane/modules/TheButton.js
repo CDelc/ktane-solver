@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { EdgeworkContext } from '../EdgeworkProvider';
 import Select from 'react-select'
-import '../styles/vanillaModules.css'
+import '../styles/modules.css'
 import { getNumBatteries, getLitIndicators } from '../utils';
 
 function TheButton() {

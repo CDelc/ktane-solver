@@ -9,8 +9,8 @@ function EdgeworkProvider({ children }){
         serialNumber: "",
         portPlates: [],
         batteryHolders: [],
-        indicators: []}
-    );
+        indicators: []
+    });
 
     return (
         <EdgeworkContext.Provider value={{ edgework, setEdgework }}>
