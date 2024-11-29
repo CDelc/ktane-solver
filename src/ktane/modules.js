@@ -22,7 +22,7 @@ import ComplicatedWires from './modules/ComplicatedWires';
 import WireSequences from './modules/WireSequences';
 import Mazes from './modules/Mazes';
 import Passwords from './modules/Passwords';
-import ColoredSquares from './modules/ColoredSquares';
+import ColoredSquares from './modules/coloredsquares/ColoredSquares';
 
 const modules = [
     {
@@ -104,7 +104,7 @@ const modules = [
         component: <Passwords />
     },
     {
-        name: "Colored Squares and its Brethren",
+        name: "Colored Squares",
         image: password,
         path: "colored_squares",
         element: <BombModule module={this} />,
