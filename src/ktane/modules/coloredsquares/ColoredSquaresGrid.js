@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { COLOR, offIndex, offColor, detectModule, MODULE_TYPES } from './ColoredSquaresTools';
 
-function ColoredSquaresGrid({state, moduleState, solvingState, highlight}) {
+function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text}) {
 
     const [colors, setColors] = state
     const [module, setModule] = moduleState
     const [solving, setSolving] = solvingState
+    const squareText = text
 
     const [currentColor, setCurrentColor] = useState(offIndex);
 
@@ -88,7 +89,6 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight}) {
     }
 
     useEffect(updateError);
-
     return (
         <div className='center'>
             {error !== '' && <div className='module-error'>{error}</div>}
@@ -102,15 +102,15 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight}) {
                             style={{
                                 backgroundColor: COLOR[colors[index]],
                                 borderRadius: '7px',
-                                border: Array.isArray(highlight) ? highlight.includes(index) ? colors[index] === 0 ? '4px solid #444' : '4px solid #aff' : 'none'
-                                    : index === highlight ? colors[index] === 0 ? '4px solid #444' : '4px solid #fff' : 'none',
-                                color: '#ddd',
+                                border: Array.isArray(highlight) ? highlight.includes(index) ? colors[index] === 0 | colors[index] === 4 ? '4px solid #444' : '4px solid #aff' : 'none'
+                                    : index === highlight ? colors[index] === 0 | colors[index] === 4 ? '4px solid #444' : '4px solid #fff' : 'none',
+                                color: colors[index] === 0 || colors[index] === 4 ? 'black' : 'white',
                                 fontSize: '25px',
                                 fontWeight: '600'
                             }}
                             onClick={() => changeColor(currentColor, index)}
                         >
-                            {colors[index] === offIndex ? 'OFF' : ''}
+                            {colors[index] === offIndex ? 'OFF' : squareText[index]}
                         </button>
                     ))}
                 </div>

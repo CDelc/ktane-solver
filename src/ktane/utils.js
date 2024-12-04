@@ -28,13 +28,41 @@ const morseAlphabet = [
     '.--',
     '-..-',
     '-.--',
-    '--..'
+    '--..',
+    '-----',
+    '.----',
+    '..---',
+    '...--',
+    '....-',
+    '.....',
+    '-....',
+    '--...',
+    '---..',
+    '----.'
 ]
 
 export const morseToLetter = (string) => {
     const rIndex = morseAlphabet.indexOf(string)
     if(rIndex >= 0) return alphabet[rIndex]
     else return ''
+}
+
+export const letterToMorse = (letter) => {
+    if(letter.toLowerCase() >= 'a' && letter.toLowerCase() <= 'z') {
+        return morseAlphabet[alphaPosition(letter) - 1]
+    }
+    else if(letter.toLowerCase() >= '0' && letter.toLowerCase() <= '9') {
+        return morseAlphabet[+letter + 26]
+    }
+}
+
+export const removeCharAt = (str, i) => {
+    if(i >= str.length) return str
+    return str.slice(0, i) + str.slice(i + 1, str.length)
+}
+
+export const alphaPosition = (letter) => {
+    return letter.toLowerCase().charCodeAt() - 96
 }
 
 export const containsVowel = (serial) => {
