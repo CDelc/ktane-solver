@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
-import { COLOR, offIndex, offColor, detectModule, MODULE_TYPES } from './ColoredSquaresTools';
+import { COLOR, detectModule, MODULE_TYPES } from './ColoredSquaresTools';
 
-function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text}) {
+function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text, loading, flashingState}) {
 
     const [colors, setColors] = state
     const [module, setModule] = moduleState
     const [solving, setSolving] = solvingState
+    const [flashing, setFlashing] = flashingState
     const squareText = text
 
-    const [currentColor, setCurrentColor] = useState(offIndex);
+    const [currentColor, setCurrentColor] = useState(0);
 
     const [showAllColors, setShowAllColors] = useState(false)
-    const [error, setError] = useState('No squares should be off')
+    const [error, setError] = useState('Module variant not detected')
 
     const disableExtraColors = solving && module !== MODULE_TYPES.JUXTACOLORED && module !== MODULE_TYPES.TOMBSTONE
 
@@ -23,7 +24,8 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text})
         width: '430px',
         height: '430px',
         gap: '10px',
-        padding: '20px'
+        padding: '20px',
+        marginTop: '20px'
     }
 
     const menuStyle = {
@@ -48,16 +50,17 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text})
         fontStyle: 'bold',
         fontSize: '30px',
         fontWeight: '400',
-        marginTop: '2em'
+        marginTop: '0em',
+        marginBottom: '0'
     }
 
     const toggleMoreColors = () => {
         if(showAllColors) {
             setShowAllColors(false)
-            if(currentColor > 7) setCurrentColor(offIndex)
+            if(currentColor > 5) setCurrentColor(0)
             let tmp = [...colors]
             const removedAdvanced = tmp.map((square) => {
-                if(square > offIndex) return offIndex
+                if(square > 5) return 0
                 else return square
             })
             setColors(removedAdvanced)
@@ -67,33 +70,48 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text})
     }
 
     const changeColor = (colorIndex, index) => {
-        let tmp = [...colors]
-        tmp[index] == colorIndex ? 
-        tmp[index] = offIndex :
-        tmp[index] = colorIndex
-        setColors(tmp)
+        if(loading) return
+        if(colorIndex === 17) {
+            flashing === index ? setFlashing(-1) : setFlashing(index)
+        }
+        else {
+            let tmp = [...colors]
+            tmp[index] = colorIndex
+            setColors(tmp)
+        }
+    }
+
+    const fillColor = (color) => {
+        if(color > 16 || color < 0) return
+        setColors(new Array(16).fill(color))
     }
 
     const clear = () => {
-        setColors(new Array(16).fill(offIndex))
+        if(loading) return
+        setColors(new Array(16).fill(0))
+        setFlashing(-1)
     }
 
     const updateError = () => {
-        if(colors.filter((square) => square === offIndex).length > 0 && !solving) {
-            setError('No squares should be off')    
+        const module = detectModule(colors, flashing)
+        if(module === '' && !solving) {
+            setError('Module variant not detected')    
         }
         else {
             setError('')
         }
-        if(!solving) setModule(detectModule(colors))
+        if(!solving) setModule(module)
     }
 
     useEffect(updateError);
     return (
         <div className='center'>
-            {error !== '' && <div className='module-error'>{error}</div>}
-            {error === '' && module !== '' && <div className='module-solve'>{module}</div>}
-            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+            <div style={{display: 'flex', gap: '10px'}}>
+                
+                {error !== '' && <div className='module-error no-margin'>{error}</div>}
+                {error === '' && module !== '' && <div className='module-solve no-margin'>{module}</div>}
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'start'}}>
                 <div style={gridStyle}>
                     {[...Array(16)].map((_, index) => (
                         <button
@@ -102,26 +120,26 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text})
                             style={{
                                 backgroundColor: COLOR[colors[index]],
                                 borderRadius: '7px',
-                                border: Array.isArray(highlight) ? highlight.includes(index) ? colors[index] === 0 | colors[index] === 4 ? '4px solid #444' : '4px solid #aff' : 'none'
-                                    : index === highlight ? colors[index] === 0 | colors[index] === 4 ? '4px solid #444' : '4px solid #fff' : 'none',
-                                color: colors[index] === 0 || colors[index] === 4 ? 'black' : 'white',
+                                border: Array.isArray(highlight) ? highlight.includes(index) ? colors[index] === 0 ? '4px solid #444' : '4px solid #aff' : 'none'
+                                    : index === highlight ? colors[index] === 0 ? '4px solid #444' : '4px solid #aff' : 'none',
+                                color: colors[index] === 0 || colors[index] === 4 || colors[index] === 6 ? 'black' : 'white',
                                 fontSize: '25px',
                                 fontWeight: '600'
                             }}
                             onClick={() => changeColor(currentColor, index)}
                         >
-                            {colors[index] === offIndex ? 'OFF' : squareText[index]}
+                            {squareText[index]}
                         </button>
                     ))}
                 </div>
-                <div className='center' style={{width: '40%'}}>
-                    <h3 style={menuHeadingStyle}>Color Select</h3>
+                <div className='center' style={{width: '500px'}}>
+                    {/* <h3 style={menuHeadingStyle}>Color Select</h3> */}
                     <button onClick={toggleMoreColors} className='blue-button' style={{width: '250px'}}>
                         {showAllColors ? 'Show Fewer Colors' : 'Show More Colors'}
                     </button>
                     <div style={menuStyle}>
-                        {[...Array(showAllColors ? COLOR.length : 7)].map((_, index) => (
-                            index !== offIndex && <button
+                        {[...Array(showAllColors ? COLOR.length : 6)].map((_, index) => (
+                            <button
                                 key={index}
                                 className='lighten-button'
                                 style={{...menuButtonStyle,
@@ -129,15 +147,24 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text})
                                     index,
                                     border: index === currentColor ? index === 0 ? '4px solid #444' : '4px solid #fff' : '1px solid black'}}
                                 onClick={() => setCurrentColor(index)}>
-                                {COLOR[index] === offColor ? 'CLEAR' : ''}
                             </button>
                         ))}
                     </div>
                 </div>
+                <div className='center'>
+                    <button onClick={clear} className='reset-button' style={{width: '250px'}}>Clear Grid</button>
+                    <button onClick={() => fillColor(currentColor)} className='blue-button' style={{width: '250px'}}>
+                        Fill Grid
+                    </button>
+                    <button onClick={() => setCurrentColor(17)}
+                        className='blue-button'
+                        style={{width: '250px', border: currentColor === 17 ? '3px solid red' : '1px rgb(0, 4, 128) solid'}}
+                    >
+                        Set Flashing
+                    </button>
+                </div>
             </div>
-            <div style={{display: 'flex', margin: '30px'}}>
-                <button onClick={clear} className='reset-button'>Clear</button>
-            </div>
+            
             
         </div>
     )
