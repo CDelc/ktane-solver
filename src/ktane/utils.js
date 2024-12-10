@@ -112,3 +112,11 @@ export const getUnlitIndicators = (indicators) => {
     let rValue = indicators.filter(i => i[1] === 0).map(i => (i[0]))
     return rValue;
 }
+
+export const range = (size, start = 0) => {
+    return [...Array(size).keys()].map(i => i + start);
+}
+
+export const arrayEquals = (array1, array2) => {
+    return array1.filter((e, i) => e === array2[i]).length === array1.length
+}

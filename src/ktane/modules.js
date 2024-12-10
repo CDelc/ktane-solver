@@ -9,6 +9,14 @@ import password from './images/password.png';
 import simon_says from './images/simon_says.png';
 import whos_on_first from './images/whos_on_first.png';
 import wire_sequences from './images/wire_sequences.png';
+import colored_squares from './images/colored_squares.png';
+import varicolored_squares from './images/varicolored_squares.png';
+import bicolored_squares from './images/bicolored_squares.png';
+import decolored_squares from './images/decolored_squares.png';
+import isocolored_squares from './images/isocolored_squares.png';
+import juxtacolored_squares from './images/juxtacolored_squares.png';
+import overcolored_squares from './images/overcolored_squares.png';
+import uncolored_squares from './images/uncolored_squares.png';
 
 import BombModule from './modules/BombModule';
 import Wires from './modules/Wires';
@@ -105,7 +113,63 @@ const modules = [
     },
     {
         name: "Colored Squares",
-        image: password,
+        image: colored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Not Colored Squares",
+        image: colored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Varicolored Squares",
+        image: varicolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Bicolored Squares",
+        image: bicolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Decolored Squares",
+        image: decolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Isocolored Squares",
+        image: isocolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Juxtacolored Squares",
+        image: juxtacolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Overcolored Squares",
+        image: overcolored_squares,
+        path: "colored_squares",
+        element: <BombModule module={this} />,
+        component: <ColoredSquares />
+    },
+    {
+        name: "Uncolored Squares",
+        image: uncolored_squares,
         path: "colored_squares",
         element: <BombModule module={this} />,
         component: <ColoredSquares />

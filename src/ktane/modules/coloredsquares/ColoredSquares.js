@@ -8,7 +8,8 @@ import {
     solveIsocoloredSquares,
     solveJuxtaColoredSquares,
     solveOvercoloredSquares,
-    solveUncoloredSquares
+    solveUncoloredSquares,
+    solveVaricoloredSquares
 } from "./ColoredSquaresTools";
 import ColoredSquaresGrid from "./ColoredSquaresGrid";
 import { EdgeworkContext } from "../../EdgeworkProvider";
@@ -62,7 +63,7 @@ function ColoredSquares() {
     }
 
     const solveStage = () => {
-        //if(loading) return
+        if(loading) return
         setSolving(true)
         let queue = puzzleState.queue
         if(queue && queue.length > MAX_QUEUE_DISPLAY) {
@@ -105,6 +106,8 @@ function ColoredSquares() {
                 return solveOvercoloredSquares;
             case MODULE_TYPES.UNCOLORED:
                 return solveUncoloredSquares;
+            case MODULE_TYPES.VARICOLORED:
+                return solveVaricoloredSquares;
             default:
                 return () => {return -1}
         }
@@ -156,6 +159,9 @@ function ColoredSquares() {
                 loading={loading}
                 flashingState={[flashing, setFlashing]}
             />
+            {module === 'Varicolored Squares' && <div className='module-error'>
+                Note: Due to some module randomness, the Varicolored Squares module may fail to solve sometimes
+            </div>}
             <div className='module-error'>
                 Note: Perspecticolored Squares and Tombstone maze are not supported
             </div>

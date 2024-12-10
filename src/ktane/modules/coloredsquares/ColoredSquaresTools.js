@@ -1,4 +1,10 @@
-import { letterToMorse, removeCharAt, getLastDigit } from "../../utils";
+/* eslint-disable no-loop-func */
+import { letterToMorse, removeCharAt, getLastDigit, range, arrayEquals } from "../../utils";
+
+/**
+ * Disclaimer: This is probably the most unreadable, messy, confusing, and untestable code I've ever created.
+ * Do not read it too carefully, only madness will come from that
+ */
 
 const COLORED_SQUARES_GRID = [
     [2, 7, 1, 4, 6, 3, 5],
@@ -242,7 +248,6 @@ const solveNotColoredSquares = (colors, state) => {
             //console.log(boardStates.filter(state => state.quality >= 0).map(state => {return {...state, sim: state.board.filter((color, index) => color === goal[index]).length}}).filter(state => state.sim > 14))
             const solution = boardStates.filter(state => state.board.filter((color, index) => color === goal[index]).length >= goal.length - 1)
             if(solution.length > 0) {
-                console.log(solution[0])
                 return {
                     state: solution[0],
                     solved: true
@@ -1241,17 +1246,14 @@ export const solveUncoloredSquares = (colors, state, flashing) => {
         return "There should be exactly two colors tied for the least common color"
     }
     const minColorIndices = [colors.indexOf(counts.indexOf(minCount) + 1), colors.indexOf(counts.lastIndexOf(minCount) + 1)]
-    console.log(minColorIndices)
     const colorOne = colors[Math.min(...minColorIndices)]
     const colorTwo = colors[Math.max(...minColorIndices)]
 
     if((colorOne > 6 || colorOne < 1) || ((colorTwo > 6 || colorTwo < 1))) {
         return "Error: Illegal Colors"
     }
-    console.log((colorTwo - 1) * 5 + colorOne - 1)
     const shape = shapes[(colorTwo - 1) * 5 + colorOne - 1]
     let highlight = []
-    console.log(shape)
     for(let i = 0; i < colors.length; i++) {
         if(shapeFits(shape, i, colors)) {
             for(let coord of shape) {
@@ -1264,4 +1266,172 @@ export const solveUncoloredSquares = (colors, state, flashing) => {
         }
     }
     return "No solution found"
+}
+
+export const solveVaricoloredSquares = (colors, state, flashing) => {
+    if(state.queue.length > 0) {
+        return "Module already solved"
+    }
+
+    const pentagons = [
+        [],
+        [2, 1, 5, 4, 3],
+        [4, 2, 1, 5, 3],
+        [1, 4, 2, 5, 3],
+        [1, 5, 2, 4, 3],
+        [3, 4, 1, 2, 5]
+    ]
+
+    const isAdjacent = (indexOne, indexTwo) => {
+        return [1, 4].includes(Math.abs(indexOne - indexTwo)) && indexOne !== indexTwo
+    }
+
+    const getBetweenMissingIndex = (indexOne, indexTwo, indexThree) => {
+        return getBetweenIndex(...getMissingIndices(indexOne, indexTwo, indexThree))
+    }
+
+    const getBetweenIndex = (indexOne, indexTwo) => {
+        if(isAdjacent(indexOne, indexTwo)) return -1
+        if(Math.abs(indexOne - indexTwo) === 2) {
+            return (indexOne + indexTwo) / 2
+        }
+        else if(indexOne === 0 || indexTwo === 0) return 4
+        else return 0
+    }
+
+    const getAcrossMissingIndex = (indexOne, indexTwo, indexThree) => {
+        return getAcrossIndex(...getMissingIndices(indexOne, indexTwo, indexThree))
+    }
+
+    const getAcrossIndex = (indexOne, indexTwo) => {
+        if(!isAdjacent(indexOne, indexTwo) || indexOne === indexTwo) return -1
+        return range(5).find(i => Math.abs(i - indexOne) > 1 && Math.abs(i - indexTwo) > 1 && (Math.abs(i - indexOne) === 2 || Math.abs(i - indexTwo) === 2))
+    }
+
+    const getMissingIndices = (indexOne, indexTwo, indexThree) => {
+        return range(5).filter(i => ![indexOne, indexTwo, indexThree].includes(i))
+    }
+
+    const getValidColorIndex = (board, currentIndex, pentagon) => {
+        let adjacentColors = []
+        if(currentIndex > 3) adjacentColors.push(board[currentIndex - 4])
+        if(currentIndex < 12) adjacentColors.push(board[currentIndex + 4])
+        if(currentIndex % 4 !== 0) adjacentColors.push(board[currentIndex - 1])
+        if(currentIndex % 4 !== 3) adjacentColors.push(board[currentIndex + 1])
+        let colorSet = [...new Set(adjacentColors)]
+        switch(colorSet.length) {
+            case 1:
+                return (pentagon.indexOf(adjacentColors[0]) + 1) % 5
+            case 2:
+                let indexOne = pentagon.indexOf(colorSet[0])
+                let indexTwo = pentagon.indexOf(colorSet[1])
+                return isAdjacent(indexOne, indexTwo) ?
+                    getAcrossIndex(indexOne, indexTwo) :
+                    getBetweenIndex(indexOne, indexTwo)
+            case 3:
+                let index1 = pentagon.indexOf(colorSet[0])
+                let index2 = pentagon.indexOf(colorSet[1])
+                let index3 = pentagon.indexOf(colorSet[2])
+                return isAdjacent(...getMissingIndices(index1, index2, index3)) ?
+                    getAcrossMissingIndex(index1, index2, index3) :
+                    getBetweenMissingIndex(index1, index2, index3)
+            case 4:
+                return pentagon.indexOf(range(5, 1).find(c => !colorSet.includes(c)))
+            default:
+                console.log("problem")
+                return
+        }
+    }
+
+    const getValidColor = (board, currentIndex) => {
+        let currentColor = board[currentIndex]
+        let pentagon = pentagons[currentColor]
+        let validColorIndex = getValidColorIndex(board, currentIndex, pentagon)
+        let timeout = 0
+        while((!board.includes(pentagon[validColorIndex]) || pentagon[validColorIndex] === currentColor) && timeout < 6) {
+            if(validColorIndex === 0) validColorIndex = 4
+            else validColorIndex--
+            timeout++
+        }
+        return pentagon[validColorIndex]
+    }
+
+    const getBlob = (index, board) => {
+        let blob = new Set()
+        let color = board[index]
+        const getBlobRecur = (current) => {
+            blob.add(current)
+            if(current > 3 && board[current - 4] === color && !blob.has(current - 4)) getBlobRecur(current - 4)
+            if(current < 12 && board[current + 4] === color && !blob.has(current + 4)) getBlobRecur(current + 4)
+            if(current % 4 !== 3 && board[current + 1] === color && !blob.has(current + 1)) getBlobRecur(current + 1)
+            if(current % 4 !== 0 && board[current - 1] === color && !blob.has(current - 1)) getBlobRecur(current - 1)
+        }
+        getBlobRecur(index)
+        return Array.from(blob.values())
+    }
+
+    const findNextMoves = (board, startingIndex, blobSource, presses_since_progress) => {
+        const startBlob = getBlob(blobSource, board)
+        console.log('----------')
+        console.log(startBlob.length)
+        let initialState = {board: board, moveSequence: [], blob: startBlob}
+        let results = [initialState]
+        for(let depth = 0; depth < 3; depth++) {
+            let newResults = []
+            for(let boardState of results) {
+                const board = boardState.board
+                const lastMove = boardState.moveSequence.length ? boardState.moveSequence[boardState.moveSequence.length - 1] : startingIndex
+                const validColor = getValidColor(board, lastMove)
+                if(!board.includes(validColor)) return false
+                const newBoard = board.map((color, index) => boardState.blob.includes(index) ? validColor : color)
+                const newBlob = getBlob(blobSource, newBoard)
+                let resultsBatch = []
+                board.forEach((color, index) => {
+                    if(color !== validColor) return
+                    resultsBatch.push({board: newBoard, moveSequence: [...boardState.moveSequence, index], blob: newBlob})
+                })
+                newResults.push(...resultsBatch)
+            }
+            results = newResults
+            console.log(results.map(result => result.moveSequence))
+            if(Math.max(...results.map(result => result.blob.length)) === 16) return results.find(result => result.blob.length === 16).moveSequence
+        }
+        let bestBlob = Math.max(...results.map(result => result.blob.length))
+        console.log(bestBlob)
+        if(bestBlob <= startBlob.length) return false
+        return results.find(result => result.blob.length === bestBlob)
+    }
+
+    const counts = countColors(colors);
+    const specialCounts = counts.slice(6);
+    const hasSpecialColors = specialCounts.filter(i => i !== 0).length > 0
+    const shortCounts = counts.slice(1, 6);
+    if(hasSpecialColors) return "Illegal colors on board"
+    if(state.queue.length > 0) state.queue = []
+
+    let currentIndex = colors.indexOf(shortCounts.indexOf(4) + 1)
+    const blobSource = currentIndex
+    let currentBoard = [...colors]
+    let queue = [currentIndex]
+    let presses_since_progress = 1
+
+    let timeout = 0
+    while(timeout < 50) {
+        let next = findNextMoves(currentBoard, currentIndex, blobSource, presses_since_progress)
+        if(!next) return "No Solution"
+        if(Array.isArray(next)) {
+            queue.push(...next)
+            return {
+                ...state,
+                queue: queue
+            }
+        }
+        currentBoard = [...next.board]
+        queue.push(...next.moveSequence)
+        currentIndex = queue[queue.length - 1]
+        timeout++
+    }
+    console.log(queue)
+    return "No solution found"
+
 }
