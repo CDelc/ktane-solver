@@ -31,6 +31,7 @@ import WireSequences from './modules/WireSequences';
 import Mazes from './modules/Mazes';
 import Passwords from './modules/Passwords';
 import ColoredSquares from './modules/coloredsquares/ColoredSquares';
+import PianoKeys from './modules/piano_keys/PianoKeys';
 
 const modules = [
     {
@@ -173,6 +174,13 @@ const modules = [
         path: "colored_squares",
         element: <BombModule module={this} />,
         component: <ColoredSquares />
+    },
+    {
+        name: "Piano Keys",
+        image: uncolored_squares,
+        path: "piano_keys",
+        element: <BombModule module={this} />,
+        component: <PianoKeys />
     }
 ]
 

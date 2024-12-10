@@ -10,13 +10,13 @@ function Indicator(props) {
 
     const toggleLight = () => {
         let tmp = [...indicators];
-        tmp[props.index][1] = (tmp[props.index][1] === 0) ? 1 : 0;
+        tmp[props.index].lit = (tmp[props.index].lit === 0) ? 1 : 0;
         setIndicators(tmp);
     }
 
     const setIndicator = (s) => {
         let tmp = [...indicators];
-        tmp[props.index][0] = s;
+        tmp[props.index].label = s;
         setIndicators(tmp);
     }
     
@@ -26,8 +26,8 @@ function Indicator(props) {
                 Remove
             </button>
             <div className="indicator">
-                <button className={indicators[props.index][1] === 0 ? "indicator-light indicator-light-off" : "indicator-light indicator-light-on"} onClick={toggleLight}/>
-                <input className="indicator-label" maxLength="3" onChange={(e) => setIndicator(e.target.value)} value={indicators[props.index][0]}/>
+                <button className={indicators[props.index].lit === 0 ? "indicator-light indicator-light-off" : "indicator-light indicator-light-on"} onClick={toggleLight}/>
+                <input className="indicator-label" maxLength="3" onChange={(e) => setIndicator(e.target.value)} value={indicators[props.index].label}/>
             </div>
         </div>
     );

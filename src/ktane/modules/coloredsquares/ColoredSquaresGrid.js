@@ -156,12 +156,12 @@ function ColoredSquaresGrid({state, moduleState, solvingState, highlight, text, 
                     <button onClick={() => fillColor(currentColor)} className='blue-button' style={{width: '250px'}}>
                         Fill Grid
                     </button>
-                    <button onClick={() => setCurrentColor(17)}
+                    {/* <button onClick={() => setCurrentColor(17)}
                         className='blue-button'
                         style={{width: '250px', border: currentColor === 17 ? '3px solid red' : '1px rgb(0, 4, 128) solid'}}
                     >
                         Set Flashing
-                    </button>
+                    </button> */}
                 </div>
             </div>
             
