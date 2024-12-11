@@ -32,7 +32,7 @@ function PianoKeys() {
     }
 
     const solve = () => {
-        if(edgework.serialNumber.length !== 6) setError('Serial number missing or incomplete')
+        if(edgework.serialNumber.length !== 6 || getLastDigit(edgework.serialNumber) === null) setError('Serial number missing or incomplete')
         else setError('')
         if(symbols.includes('')) setSolution('')
         else if(symbols.includes('♭') && getLastDigit(edgework.serialNumber) % 2 === 0) {

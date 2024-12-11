@@ -17,6 +17,8 @@ import isocolored_squares from './images/isocolored_squares.png';
 import juxtacolored_squares from './images/juxtacolored_squares.png';
 import overcolored_squares from './images/overcolored_squares.png';
 import uncolored_squares from './images/uncolored_squares.png';
+import piano_keys from './images/piano_keys.png'
+import not_piano_keys from './images/not_piano_keys.png'
 
 import BombModule from './modules/BombModule';
 import Wires from './modules/Wires';
@@ -32,6 +34,7 @@ import Mazes from './modules/Mazes';
 import Passwords from './modules/Passwords';
 import ColoredSquares from './modules/coloredsquares/ColoredSquares';
 import PianoKeys from './modules/piano_keys/PianoKeys';
+import NotPianoKeys from './modules/piano_keys/NotPianoKeys';
 
 const modules = [
     {
@@ -177,10 +180,17 @@ const modules = [
     },
     {
         name: "Piano Keys",
-        image: uncolored_squares,
+        image: piano_keys,
         path: "piano_keys",
         element: <BombModule module={this} />,
         component: <PianoKeys />
+    },
+    {
+        name: "Not Piano Keys",
+        image: not_piano_keys,
+        path: "not_piano_keys",
+        element: <BombModule module={this} />,
+        component: <NotPianoKeys />
     }
 ]
 

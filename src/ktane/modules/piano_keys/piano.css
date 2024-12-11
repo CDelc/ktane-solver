@@ -19,10 +19,10 @@
 
 .display-button {
     height: 100%;
-    width: 33.333%;
+    width: 33.333333%;
     border: none;
     background: transparent;
-    transition: all ease 0.3s;
+    transition: all ease 0.1s;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,24 +41,26 @@
     justify-content: center;
     gap: 5px;
     flex-wrap: wrap;
-    width: 400px
+    width: 400px;
 }
 
 .symbol-button {
     color: black;
     width: 100px;
     height: 100px;
-    display: flex;
     justify-content: center;
+    text-align: center;
     align-items: center;
     font-family: "Bravura", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 48px;
     background: rgb(255, 255, 200);
-    transition: all ease 0.3s;
+    transition: all 0.1s;
     border-radius: 10px;
-    border: 1px black solid
+    border: 1px black solid;
+    line-height: 1;
+    overflow: hidden;
 }
 
 .symbol-button:hover {
@@ -83,7 +85,7 @@
 .module-base {
     width: 400px;
     height: 400px;
-    background-color: rgb(175, 175, 255);
+    background-color: rgb(175, 175, 225);
     position: relative;
 }
 
