@@ -162,14 +162,10 @@ function NotPianoKeys() {
 
         let pairs = []
         quadrant.forEach(minorIndex => {pairs.push(table[getMajorIndex(blockNumber, minorIndex)])})
-        console.log(pairs)
-        console.log(w)
         pairs.forEach(pair => swap(w, pair[0] - 1, pair[1] - 1))
 
         let lastDigit = getLastDigit(edgework.serialNumber)
         let solution = []
-        console.log(w)
-        console.log(b)
         switch(lastDigit) {
             case 0:
                 solution = [
