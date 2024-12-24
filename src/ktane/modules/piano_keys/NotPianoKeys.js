@@ -358,9 +358,6 @@ function NotPianoKeys() {
                     {setThree.map(c => (<button key={c} className='symbol-button' onClick={() => addSymbol(c, 2)}>{c}</button>))}
                 </div>
             </div>
-            <div className='module-error'>
-                Note: This module relies heavily on edgework, make sure the edgework bar at the top is updated
-            </div>
         </div>
         
     )

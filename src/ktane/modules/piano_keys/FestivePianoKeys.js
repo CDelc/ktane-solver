@@ -2,16 +2,20 @@ import { useState, useContext, useEffect } from 'react'
 import './piano.css'
 import { EdgeworkContext } from '../../EdgeworkProvider'
 import PianoKeyboard from './PianoKeyboard'
-import { getLastDigit, getNumBatteries } from '../../utils'
+import { evenvodd, getLastDigit, containsVowel, getLargestDigit } from '../../utils'
 
-function PianoKeys() {
+function FestivePianoKeys() {
 
     const {edgework, setEdgework} = useContext(EdgeworkContext)
     const [symbols, setSymbols] = useState(new Array(3).fill(''))
     const [error, setError] = useState('')
     const [solution, setSolution] = useState('')
 
-    const musicalSymbols = ['♭', '𝄴', '♯', '♮', '𝄐', '𝄵', '𝆗', '𝄡', '']
+    const musicalSymbols = [
+        '', '', '', '',
+        '', '', '', '',
+        '', '𝄡', '', '', ''
+    ]
 
     const removeSymbol = i => {
         let newSymbols = [...symbols]
@@ -31,39 +35,52 @@ function PianoKeys() {
         setSymbols(new Array(3).fill(''))
     }
 
+    const litIndicatorWithVowel = () => {
+        const indicators = edgework.indicators
+        return indicators.filter(indicator => containsVowel(indicator.label) && indicator.lit === 1).length > 0
+    }
+
     const solve = () => {
         if(edgework.serialNumber.length !== 6 || getLastDigit(edgework.serialNumber) === null) setError('Serial number missing or incomplete')
         else setError('')
         if(symbols.includes('')) setSolution('')
-        else if(symbols.includes('♭') && getLastDigit(edgework.serialNumber) % 2 === 0) {
-            setSolution('A♯ A♯ A♯ A♯ F♯ G♯ A♯ G♯ A♯')
+        else if(evenvodd(edgework.serialNumber) === 1 && symbols.includes('')) {
+            setSolution('D♯ F D♯ C G♯ F D♯')
         }
-        else if((symbols.includes('𝄴') || symbols.includes('♯')) && edgework.batteryHolders.length >= 2) {
-            setSolution('D♯ D♯ D D D♯ D♯ D D♯ D♯ D D D♯')
+        else if((new Set(edgework.serialNumber.split(''))).size < 6 && (symbols.includes('') || symbols.includes(''))) {
+            setSolution('C♯ B A F♯ G♯ A G♯ F♯')
         }
-        else if((symbols.includes('♮') && symbols.includes('𝄐'))) {
-            setSolution('E F♯ F♯ F♯ F♯ E E E')
+        else if(symbols.includes('') && symbols.includes('')) {
+            setSolution('G A G E G A G E')
         }
-        else if((symbols.includes('𝄵') || symbols.includes('𝆗')) && edgework.portPlates.flat().includes('stereo rca')) {
-            setSolution('A♯ A A♯ F D♯ A♯ A A♯ F D♯')
+        else if((symbols.includes('') || symbols.includes('')) && (new Set(edgework.portPlates.flat())).size <= 2) {
+            setSolution('D♯ D♯ C♯ B♯ D♯ D♯ F C♯')
         }
-        else if(symbols.includes('𝄡') && edgework.indicators.find(ind => ind.label.toLowerCase() === 'snd' && ind.lit)) {
-            setSolution('E E E C E G G')
+        else if(symbols.includes('') && litIndicatorWithVowel()) {
+            setSolution('B A G D♯ D A B A G')
         }
-        else if((symbols.includes('') || symbols.includes('𝄐') || symbols.includes('𝄴')) && getNumBatteries(edgework.batteryHolders) >= 3) {
-            setSolution('C♯ D E F C♯ D E F A♯ A')
+        else if((symbols.includes('') || symbols.includes('')) && edgework.batteryHolders.filter(holder => holder === 'AA').length >= 2) {
+            setSolution('F♯ G A A D B A G E D')
         }
-        else if(symbols.includes('♭') && symbols.includes('♯')) {
-            setSolution('G G C G G C G C')
+        else if(symbols.includes('') && symbols.includes('')) {
+            setSolution('G E F G C B C D C B A G')
         }
-        else if((symbols.includes('𝄵') || symbols.includes('')) &&
-        (edgework.serialNumber.includes('3') || edgework.serialNumber.includes('7') || edgework.serialNumber.includes('8'))) {
-            setSolution('A E F G F E D D F A')
+        else if((symbols.includes('') || symbols.includes('') || symbols.includes('')) &&
+            (edgework.serialNumber.includes('1') || edgework.serialNumber.includes('9'))) {
+            setSolution('G G G G G G G A♯ D♯ F G')
         }
-        else if((symbols.includes('♮') || symbols.includes('𝆗') || symbols.includes('𝄡'))) {
-            setSolution('G G G D♯ A♯ G D♯ A♯ G')
+        else if(symbols.includes('') || symbols.includes('') || symbols.includes('𝄡')) {
+            setSolution('D D D C♯ C♯ C♯ B C♯ B F♯')
         }
-        else setSolution('B D A G A B D A')
+        else {
+            const digit = getLargestDigit(edgework.serialNumber)
+            if(digit === -1) {
+                setError('Internal Error')
+                return
+            }
+            setSolution(new Array(digit + 1).fill('A♯ A A♯ G').join(' '))
+        }
+
     }
 
     useEffect(solve, [edgework, symbols])
@@ -83,7 +100,7 @@ function PianoKeys() {
                     </div>
                     <PianoKeyboard />
                 </div>
-                <div className='button-menu'>
+                <div className='button-menu' style={{width: '500px'}}>
                     {musicalSymbols.map(c => (<button key={c} className='symbol-button' onClick={() => addSymbol(c)}>{c}</button>))}
                 </div>
             </div>
@@ -95,4 +112,4 @@ function PianoKeys() {
     )
 }
 
-export default PianoKeys
+export default FestivePianoKeys

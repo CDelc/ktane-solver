@@ -1,4 +1,4 @@
-const vowels = ['A', 'E', 'I', 'O', 'U'];
+const vowels = ['a', 'e', 'i', 'o', 'u'];
 
 const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -87,14 +87,41 @@ export const getLastDigit = (sn) => {
     return null
 }
 
+export const getLargestDigit = (sn) => {
+    let max = -1
+    for(let i = 0; i < sn.length; i++) {
+        const char = sn.charAt(i)
+        if(isDigit(char)) {
+            let num = parseInt(char)
+            if(num > max) max = num
+        }
+    }
+    return max
+}
+
 export const getFirstDigit = (sn) => {
     for(let i = 0; i < sn.length; i++) {
         const char = sn.charAt(i)
-        if(isDigit(sn.charAt(char))) {
+        if(isDigit(char)) {
             return parseInt(char)
         }
     }
     return null
+}
+
+export const evenvodd = (sn) => {
+    let evenCount = 0;
+    let oddCount = 0;
+    for(let i = 0; i < sn.length; i++) {
+        const char = sn.charAt(i)
+        if(isDigit(char)) {
+            if(parseInt(char) % 2) oddCount ++
+            else evenCount++
+        }
+    }
+    if(evenCount > oddCount) return 1
+    if(oddCount > evenCount) return -1
+    if(oddCount === evenCount) return 0
 }
 
 export const getNumBatteries = (batteries) => {
